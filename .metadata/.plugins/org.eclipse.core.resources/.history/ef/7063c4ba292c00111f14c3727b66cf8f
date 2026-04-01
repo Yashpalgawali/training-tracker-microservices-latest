@@ -1,0 +1,41 @@
+package com.example.company.service.impl;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.example.company.dto.CompanyDto;
+import com.example.company.entity.Company;
+import com.example.company.exception.CompanyAlreadyExistsException;
+import com.example.company.mapper.CompanyMapper;
+import com.example.company.repository.CompanyRepository;
+import com.example.company.service.ICompanyService;
+
+import lombok.RequiredArgsConstructor;
+
+@Service("compserv")
+@RequiredArgsConstructor
+public class CompanyServImpl implements ICompanyService {
+
+	private final CompanyRepository comprepo;
+	
+	@Override
+	public void createCompany(CompanyDto companyDto) {
+		Company company = CompanyMapper.mapToCompany(companyDto, new Company());
+		Optional<Company> companyObj = comprepo.findByCompanyName(companyDto.getCompanyName());
+		if(companyObj.isPresent()) {
+			throw new CompanyAlreadyExistsException("Company already registered with the name "+companyDto.getCompanyName());
+		}
+		company.setCreatedAt(LocalDateTime.now());
+		company.setCreatedBy("Admin");
+		comprepo.save(company);
+	}
+
+	@Override
+	public void updateCompany(CompanyDto companyDto) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,19 @@
+package com.example.company.mapper;
+
+import com.example.company.dto.CompanyDto;
+import com.example.company.entity.Company;
+
+public class CompanyMapper {
+	
+	public static CompanyDto mapToCompanyDto(Company company, CompanyDto companyDto) {
+		companyDto.setCompanyName(company.getCompanyName());
+		
+		return companyDto;
+	}
+	
+	public static Company mapToCompany(CompanyDto companyDto , Company company) {
+		company.setCompanyName(companyDto.getCompanyName());
+		
+		return company;
+	}
+}

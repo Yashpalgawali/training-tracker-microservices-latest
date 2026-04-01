@@ -1,0 +1,19 @@
+package com.example.designation.mapper;
+
+import com.example.designation.dto.DesignationDto;
+import com.example.designation.entity.Designation;
+
+public class DesignationMapper {
+
+	public static Designation mapToDesignation(Designation designation, DesignationDto desigDto) {
+
+		designation.setDesignation(desigDto.getDesignation());
+		return designation;
+	}
+
+	public static DesignationDto mapToDesignationDto(DesignationDto designationDto, Designation designation) {
+
+		designationDto.setDesignation(designation.getDesignation());
+		return designationDto;
+	}
+}

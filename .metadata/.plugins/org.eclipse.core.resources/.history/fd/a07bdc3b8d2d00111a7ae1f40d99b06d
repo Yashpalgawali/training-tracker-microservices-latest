@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: designation
+  datasource:
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: 
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 9093

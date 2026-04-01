@@ -1,0 +1,16 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "2.0"
+
+department:
+  message: "Welcome to Training Tracker Department related QA API"
+  contactDetails:
+    name : "Samyak Pagare - Quality Lead"
+    email: "samyak@gmail.com"
+  onCallSupport:
+    - (111)-111111
+    - (456)-456456

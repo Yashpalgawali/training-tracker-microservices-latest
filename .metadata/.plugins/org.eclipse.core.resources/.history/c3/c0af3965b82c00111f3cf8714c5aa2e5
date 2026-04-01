@@ -1,0 +1,28 @@
+package com.example.department.service.impl;
+
+import java.util.List;
+
+import com.example.department.dto.DepartmentDto;
+import com.example.department.service.IDepartmentService;
+
+public class DepartmentServImpl implements IDepartmentService {
+
+	@Override
+	public void createDepartment(DepartmentDto deptDto) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public DepartmentDto getDepartmentById(Long deptId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DepartmentDto> getAllDepartments() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

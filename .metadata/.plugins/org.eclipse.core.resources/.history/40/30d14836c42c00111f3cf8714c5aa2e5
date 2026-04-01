@@ -1,0 +1,34 @@
+package com.example.designation.service.impl;
+
+import java.util.List;
+
+import com.example.designation.dto.DesignationDto;
+import com.example.designation.service.IDesignationService;
+
+public class DesignationServImpl implements IDesignationService {
+
+	@Override
+	public void createDesignation(DesignationDto designationDto) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public DesignationDto getDesignationById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DesignationDto> getAllDesignations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateDesignation(DesignationDto designationDto) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

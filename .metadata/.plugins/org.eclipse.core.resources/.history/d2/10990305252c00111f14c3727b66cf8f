@@ -1,0 +1,5 @@
+package com.example.company.exception;
+
+public class GlobalExceptionHandler {
+
+}

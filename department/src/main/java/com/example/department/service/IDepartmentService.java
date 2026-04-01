@@ -1,0 +1,16 @@
+package com.example.department.service;
+
+import java.util.List;
+
+import com.example.department.dto.DepartmentDto;
+import com.example.department.entity.Department;
+
+public interface IDepartmentService {
+
+	public void createDepartment(DepartmentDto deptDto);
+	
+	public Department getDepartmentById(Long deptId);
+	
+	public List<Department> getAllDepartments();
+	
+}

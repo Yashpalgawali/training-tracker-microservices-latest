@@ -1,0 +1,20 @@
+package com.example.company.service.impl;
+
+import com.example.company.dto.CompanyDto;
+import com.example.company.service.ICompanyService;
+
+public class CompanyServImpl implements ICompanyService {
+
+	@Override
+	public void createCompany(CompanyDto companyDto) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateCompany(CompanyDto companyDto) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

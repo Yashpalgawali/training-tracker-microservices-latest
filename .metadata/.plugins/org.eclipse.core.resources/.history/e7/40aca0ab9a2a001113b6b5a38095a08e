@@ -1,0 +1,3 @@
+spring.application.name=company
+
+server.port=9091

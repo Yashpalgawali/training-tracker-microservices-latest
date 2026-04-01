@@ -1,0 +1,28 @@
+package com.example.company.service.impl;
+
+import org.springframework.stereotype.Service;
+
+import com.example.company.dto.CompanyDto;
+import com.example.company.repository.CompanyRepository;
+import com.example.company.service.ICompanyService;
+
+import lombok.RequiredArgsConstructor;
+
+@Service("compserv")
+@RequiredArgsConstructor
+public class CompanyServImpl implements ICompanyService {
+
+	private final CompanyRepository comprepo;
+	
+	@Override
+	public void createCompany(CompanyDto companyDto) {
+		
+	}
+
+	@Override
+	public void updateCompany(CompanyDto companyDto) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,5 @@
+package com.example.designation.exception;
+
+public class GlobalExceptionHandler {
+
+}

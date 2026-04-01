@@ -1,0 +1,28 @@
+services:
+  company:
+    image: "yashpalgawali/company:s1"
+    container_name : company-ms
+    ports:
+      - "9091:9091"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  department:
+    image: "yashpalgawali/department:s1"
+    container_name : department-ms
+    ports:
+      - "9092:9092"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+  designation:
+    image: "yashpalgawali/designation:s1"
+    container_name : designation-ms
+    ports:
+      - "9093:9093"
+    deploy:
+      resources:
+        limits:
+          memory: 700m
