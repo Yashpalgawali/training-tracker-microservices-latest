@@ -1,0 +1,11 @@
+build:
+  version: "1.0"
+
+designation:
+  message: "Welcome to Training Tracker Designation related Local API"
+  contactDetails:
+    name : "Yashpal Gawali -Developer"
+    email: "crankyash@gmail.com"
+  onCallSupport:
+    - (555)-123123
+    - (555)-789789

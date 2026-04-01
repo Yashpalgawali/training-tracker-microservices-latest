@@ -5,7 +5,17 @@ import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties(prefix = "company")
-public record CompanyContactsInfoDto(String message,Map<String, String>contactDetails, List<String> onCallSupport) {
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
+@ConfigurationProperties(prefix = "company")
+@Getter @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class CompanyContactsInfoDto {
+
+	String message ; 
+	Map<String, String>contactDetails; 
+	List<String> onCallSupport;
 }

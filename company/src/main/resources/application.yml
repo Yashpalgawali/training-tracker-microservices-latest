@@ -13,23 +13,21 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  config:
-    import:
-    - "application-qa.yml"
-    - "application-prod.yml"
   profiles:
-    active: "default"
+    active: "prod"
+  config:
+    import: "optional:configserver:http://localhost:8071/"
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: guest
+    password: guest
+
 server:
   port: 9091
 
-build:
-  version: "1.0"
-
-company:
-  message: "Welcome to Training Tracker Company related Local API"
-  contactDetails:
-    name : "Yashpal Gawali -Developer"
-    email: "crankyash@gmail.com"
-  onCallSupport:
-    - (555)-123123
-    - (555)-789789
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

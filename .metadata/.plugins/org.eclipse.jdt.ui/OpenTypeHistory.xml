@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy>
-    <typeInfo handle="=company/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.company.service{ICompanyService.java[ICompanyService" modifiers="513" timestamp="1774869257296"/>
-    <typeInfo handle="=company/C:\/Users\/YASHPAL\/.m2\/repository\/org\/springframework\/spring-webmvc\/7.0.6\/spring-webmvc-7.0.6.jar=/maven.pomderived=/true=/=/maven.groupId=/org.springframework=/=/maven.artifactId=/spring-webmvc=/=/maven.version=/7.0.6=/=/maven.scope=/compile=/=/maven.pomderived=/true=/&lt;org.springframework.web.servlet.mvc.method.annotation(ResponseEntityExceptionHandler.class[ResponseEntityExceptionHandler" modifiers="1057" timestamp="1774697380926"/>
-    <typeInfo handle="=company/C:\/Users\/YASHPAL\/.m2\/repository\/org\/springframework\/data\/spring-data-jpa\/4.0.4\/spring-data-jpa-4.0.4.jar=/maven.pomderived=/true=/=/maven.groupId=/org.springframework.data=/=/maven.artifactId=/spring-data-jpa=/=/maven.version=/4.0.4=/=/maven.scope=/compile=/=/maven.pomderived=/true=/&lt;org.springframework.data.jpa.repository(JpaRepository.class[JpaRepository" modifiers="1537" timestamp="1774697378965"/>
-    <typeInfo handle="=department/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.example.department.service{IDepartmentService.java[IDepartmentService" modifiers="513" timestamp="1774872920560"/>
-</typeInfoHistroy>

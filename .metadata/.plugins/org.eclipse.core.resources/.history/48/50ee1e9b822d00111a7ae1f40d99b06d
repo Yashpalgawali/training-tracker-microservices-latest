@@ -1,8 +1,0 @@
-package com.example.company.dto;
-
-import java.util.List;
-import java.util.Map;
-
-public record CompanyContactsInfoDto(String message,Map<String, String>contactDetails, List<String> onCallSupport) {
-
-}

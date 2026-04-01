@@ -1,0 +1,11 @@
+build:
+  version: "3.1"
+
+company:
+  message: "Welcome to Training Tracker Company related PROD API"
+  contactDetails:
+    name : "Swapnali Gawali - Product Owner"
+    email: "sawpna@gmail.com"
+  onCallSupport:
+    - (222)-777777
+    - (555)-999999

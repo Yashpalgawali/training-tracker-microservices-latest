@@ -2,7 +2,11 @@ package com.example.department.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.department.constants.DepartmentConstants;
 import com.example.department.dto.DepartmentDto;
+import com.example.department.dto.DepartmentsContactInfoDto;
 import com.example.department.dto.ResponseDto;
 import com.example.department.entity.Department;
 import com.example.department.service.IDepartmentService;
@@ -22,12 +27,21 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("api")
+@RequestMapping(value="api",produces = {MediaType.APPLICATION_JSON_VALUE})
 @Validated
 @RequiredArgsConstructor
 public class DepartmentController {
 
 	private final IDepartmentService deptserv;
+	
+	@Value("${build.version}")
+	private String buildVersion;
+	
+	@Autowired
+	private Environment environment;
+	
+	@Autowired
+	private DepartmentsContactInfoDto departmentContactInfoDto;
 	
 	@PostMapping("/")
 	public ResponseEntity<ResponseDto> createDepartment(@Valid @RequestBody DepartmentDto departmentDto){
@@ -48,5 +62,20 @@ public class DepartmentController {
 	public ResponseEntity<List<Department>> getAllDepartments() {		
 		List<Department> deptList = deptserv.getAllDepartments();
 		return ResponseEntity.status(HttpStatus.OK).body(deptList);
+	}
+	
+	@GetMapping("/build-info")
+	public ResponseEntity<String> getBuildInfo(){
+		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+	}
+	
+	@GetMapping("/java-version")
+	public ResponseEntity<String> getJavaVersion(){
+		return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("JAVA_HOME"));
+	}
+	
+	@GetMapping("/contact-info")
+	public ResponseEntity<DepartmentsContactInfoDto> getContactInfo(){
+		return ResponseEntity.status(HttpStatus.OK).body(departmentContactInfoDto);
 	}
 }
