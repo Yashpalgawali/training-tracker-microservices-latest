@@ -1,0 +1,80 @@
+services:
+  rabbit:
+    image: rabbitmq:4-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  configserver:
+    image: "yashpalgawali/configserver:s1"
+    container_name: configserver-ms
+    ports:
+      - "8071:8071"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+
+  accounts:
+    image: "yashpalgawali/company:s1"
+    container_name: company-ms
+    ports:
+      - "9091:9091"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "company"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+  department:
+    image: "yashpalgawali/department:s1"
+    container_name: department-ms
+    ports:
+      - "9092:9092"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "department"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+  designation:
+    image: "yashpalgawali/designation:s1"
+    container_name: designation-ms
+    ports:
+      - "9093:9093"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "designation"
+    extends:
+      file: common-config.yml
+      service: microservice-configserver-config
+
+networks:
+  trainingtracker:
+    driver: "bridge"
