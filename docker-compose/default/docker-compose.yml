@@ -33,7 +33,7 @@ services:
       file: common-config.yml
       service: microservice-base-config
 
-  accounts:
+  company:
     image: "yashpalgawali/company:s1"
     container_name: company-ms
     ports:

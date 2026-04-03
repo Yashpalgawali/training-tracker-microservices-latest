@@ -6,11 +6,11 @@ services:
       - "5672:5672"
       - "15672:15672"
     healthcheck:
-      test: rabbitmq_diagnostics check_port_connectivity
+      test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
-      retries: 10
       timeout: 5s
-      start_period: 10s
+      retries: 10
+      start_period: 5s
     extends:
       file: common-config.yml
       service: network-deploy-service
@@ -27,7 +27,7 @@ services:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 10
       start_period: 10s
     extends:
       file: common-config.yml
@@ -35,38 +35,46 @@ services:
 
   company:
     image: "yashpalgawali/company:s1"
-    container_name: company
+    container_name: company-ms
     ports:
       - "9091:9091"
+    depends_on:
+      configserver:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "company"
     extends:
       file: common-config.yml
-      service:  microservice-configserver-config
+      service: microservice-configserver-config
 
   department:
     image: "yashpalgawali/department:s1"
-    container_name: department
+    container_name: department-ms
     ports:
       - "9092:9092"
+    depends_on:
+      configserver:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "department"
     extends:
       file: common-config.yml
-      service:  microservice-configserver-config
+      service: microservice-configserver-config
 
   designation:
     image: "yashpalgawali/designation:s1"
-    container_name: designation
+    container_name: designation-ms
     ports:
       - "9093:9093"
+    depends_on:
+      configserver:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "designation"
     extends:
       file: common-config.yml
-      service:  microservice-configserver-config
+      service: microservice-configserver-config
 
 networks:
   trainingtracker:
     driver: "bridge"
- 
