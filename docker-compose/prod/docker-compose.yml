@@ -33,6 +33,28 @@ services:
       file: common-config.yml
       service: microservice-base-config
 
+  companydb:
+    image: mysql
+    container_name: companydb
+    ports:
+      - 3306:3306
+    environment:
+       MYSQL_DATABASE: companydb
+    extends:
+      file: common-config.yml
+      service: microservice_db_config
+
+  departmentdb:
+    image: mysql
+    container_name: departmentdb
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: departmentdb
+    extends:
+      file: common-config.yml
+      service: microservice_db_config
+
   company:
     image: "yashpalgawali/company:s1"
     container_name: company-ms
@@ -41,8 +63,11 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
+      companydb:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "company"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://companydb:3306/companydb"
     extends:
       file: common-config.yml
       service: microservice-configserver-config
@@ -55,25 +80,28 @@ services:
     depends_on:
       configserver:
         condition: service_healthy
+      departmentdb:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "department"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://departmentdb:3306/departmentdb"
     extends:
       file: common-config.yml
       service: microservice-configserver-config
 
-  designation:
-    image: "yashpalgawali/designation:s1"
-    container_name: designation-ms
-    ports:
-      - "9093:9093"
-    depends_on:
-      configserver:
-        condition: service_healthy
-    environment:
-      SPRING_APPLICATION_NAME: "designation"
-    extends:
-      file: common-config.yml
-      service: microservice-configserver-config
+#  designation:
+#    image: "yashpalgawali/designation:s1"
+#    container_name: designation-ms
+#    ports:
+#      - "9093:9093"
+#    depends_on:
+#      configserver:
+#        condition: service_healthy
+#    environment:
+#      SPRING_APPLICATION_NAME: "designation"
+#    extends:
+#      file: common-config.yml
+#      service: microservice-configserver-config
 
 networks:
   trainingtracker:

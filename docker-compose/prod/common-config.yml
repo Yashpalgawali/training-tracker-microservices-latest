@@ -9,8 +9,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 700m
-      
+          memory: 700m      
 
   microservice-configserver-config:
     extends:
@@ -21,5 +20,18 @@ services:
     environment:
       SPRING_CONFIG_IMPORT : "configserver:http://configserver:8071/"
       SPRNIG_PROFILES_ACTIVE: prod
+
+  microservice_db_config:
+    extends:
+      service: network-deploy-service
+    image: mysql
+    healthcheck:
+      test: ["CMD","mysqladmin","ping","-h","localhost"]
+      timeout: 10s
+      retries: 10
+      interval: 10s
+      start_period: 10s
+    environment:
+      MYSQL_ROOT_PASSWORD: root
 
    
