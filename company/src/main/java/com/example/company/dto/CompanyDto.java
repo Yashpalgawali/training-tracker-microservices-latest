@@ -12,7 +12,9 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CompanyDto {
 	
+	Long companyId;
+	
 	@NotBlank(message = "Company name can't be blank")
 	@Size(min=2 , max=20,message = "Company must have at least 2 characters")
-	String companyName;	
+	String companyName;
 }

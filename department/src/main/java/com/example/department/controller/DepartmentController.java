@@ -52,15 +52,15 @@ public class DepartmentController {
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Department> getDepartmentById(@PathVariable Long id){
+	public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long id){
 		
-		Department dept = deptserv.getDepartmentById(id);
+		DepartmentDto dept = deptserv.getDepartmentById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(dept);
 	}
 	
 	@GetMapping("/")
-	public ResponseEntity<List<Department>> getAllDepartments() {		
-		List<Department> deptList = deptserv.getAllDepartments();
+	public ResponseEntity<List<DepartmentDto>> getAllDepartments() {		
+		List<DepartmentDto> deptList = deptserv.getAllDepartments();
 		return ResponseEntity.status(HttpStatus.OK).body(deptList);
 	}
 	

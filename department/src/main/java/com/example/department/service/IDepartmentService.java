@@ -9,8 +9,8 @@ public interface IDepartmentService {
 
 	public void createDepartment(DepartmentDto deptDto);
 	
-	public Department getDepartmentById(Long deptId);
+	public DepartmentDto getDepartmentById(Long deptId);
 	
-	public List<Department> getAllDepartments();
+	public List<DepartmentDto> getAllDepartments();
 	
 }

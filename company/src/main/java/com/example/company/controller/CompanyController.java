@@ -21,6 +21,7 @@ import com.example.company.dto.CompanyContactsInfoDto;
 import com.example.company.dto.CompanyDto;
 import com.example.company.dto.ResponseDto;
 import com.example.company.entity.Company;
+import com.example.company.mapper.CompanyMapper;
 import com.example.company.service.ICompanyService;
 
 import jakarta.validation.Valid;
@@ -50,10 +51,11 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<Company> retrieveCompanyById(@PathVariable Long id) {
+	public ResponseEntity<CompanyDto> retrieveCompanyById(@PathVariable Long id) {
 		
 		Company company = compserv.retrieveCompanyById(id);
-		return ResponseEntity.status(HttpStatus.OK).body(company);
+		CompanyDto dto =  CompanyMapper.mapToCompanyDto(company, new CompanyDto());
+		return ResponseEntity.status(HttpStatus.OK).body(dto);
 	} 
 	
 	@GetMapping("/")

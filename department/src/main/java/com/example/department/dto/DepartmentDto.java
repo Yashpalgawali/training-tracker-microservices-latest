@@ -15,6 +15,8 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DepartmentDto {
 
+	Long departmentId;
+	
 	@NotBlank(message = "Department name can't be blank")
 	@Size(min = 2, max = 20, message = "Department name must have at lease 2 characters")
 	String departmentName;
