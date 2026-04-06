@@ -32,6 +32,26 @@ services:
     extends:
       file: common-config.yml
       service: microservice-base-config
+  
+  eurekaserver:
+    image: "yashpalgawali/eurekaserver:s1"
+    container_name: eurekaserver-ms
+    ports:
+      - "8070:8070"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
 
   companydb:
     image: mysql
@@ -70,7 +90,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:mysql://companydb:3306/companydb"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
   department:
     image: "yashpalgawali/department:s1"
@@ -87,7 +107,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:mysql://departmentdb:3306/departmentdb"
     extends:
       file: common-config.yml
-      service: microservice-configserver-config
+      service: microservice-eureka-config
 
 #  designation:
 #    image: "yashpalgawali/designation:s1"

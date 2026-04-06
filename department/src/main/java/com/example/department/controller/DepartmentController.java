@@ -20,7 +20,6 @@ import com.example.department.constants.DepartmentConstants;
 import com.example.department.dto.DepartmentDto;
 import com.example.department.dto.DepartmentsContactInfoDto;
 import com.example.department.dto.ResponseDto;
-import com.example.department.entity.Department;
 import com.example.department.service.IDepartmentService;
 
 import jakarta.validation.Valid;
@@ -45,19 +44,18 @@ public class DepartmentController {
 	
 	@PostMapping("/")
 	public ResponseEntity<ResponseDto> createDepartment(@Valid @RequestBody DepartmentDto departmentDto){
-		
+
 		deptserv.createDepartment(departmentDto);
 		return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseDto(DepartmentConstants.STATUS_201,DepartmentConstants.MESSAGE_201));
 	}
-	
-	
+
 	@GetMapping("/{id}")
 	public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long id){
-		
+
 		DepartmentDto dept = deptserv.getDepartmentById(id);
 		return ResponseEntity.status(HttpStatus.OK).body(dept);
 	}
-	
+
 	@GetMapping("/")
 	public ResponseEntity<List<DepartmentDto>> getAllDepartments() {		
 		List<DepartmentDto> deptList = deptserv.getAllDepartments();
