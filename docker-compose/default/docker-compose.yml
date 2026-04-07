@@ -81,10 +81,40 @@ services:
     ports:
       - "9091:9091"
     depends_on:
-      configserver:
+      eurekaserver:
         condition: service_healthy
       companydb:
         condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "company"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://companydb:3306/companydb"
+    healthcheck:
+      test: "curl --fail --silent localhost:9091/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+  
+  company1:
+    image: "yashpalgawali/company:s1"
+    container_name: company-ms1
+    ports:
+      - "9191:9091"
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+      companydb:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9091/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
     environment:
       SPRING_APPLICATION_NAME: "company"
       SPRING_DATASOURCE_URL: "jdbc:mysql://companydb:3306/companydb"
@@ -98,10 +128,17 @@ services:
     ports:
       - "9092:9092"
     depends_on:
-      configserver:
+      eurekaserver:
         condition: service_healthy
       departmentdb:
         condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9092/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
     environment:
       SPRING_APPLICATION_NAME: "department"
       SPRING_DATASOURCE_URL: "jdbc:mysql://departmentdb:3306/departmentdb"
@@ -122,6 +159,22 @@ services:
 #    extends:
 #      file: common-config.yml
 #      service: microservice-configserver-config
+  gatewayserver:
+    image: "yashpalgawali/gatewayserver:s1"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      company:
+        condition: service_healthy
+      department:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
 
 networks:
   trainingtracker:

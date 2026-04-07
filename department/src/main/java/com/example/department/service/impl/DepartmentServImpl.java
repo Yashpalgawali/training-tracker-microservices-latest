@@ -43,7 +43,7 @@ public class DepartmentServImpl implements IDepartmentService {
 	}
 
 	@Override
-	public DepartmentDto getDepartmentById(Long deptId) {
+	public DepartmentDto getDepartmentById(Long deptId,String correlationId) {
 
 		Department department = deptrepo.findById(deptId)
 				.orElseThrow(() -> new ResourceNotFoundException("Department", "Department ID", "" + deptId));
@@ -51,7 +51,7 @@ public class DepartmentServImpl implements IDepartmentService {
 		DepartmentDto mappedDto = DepartmentMapper.mapToDepartmentDto(department, new DepartmentDto());
 
 		try {
-			ResponseEntity<CompanyDto> companyDto = companyclient.retrieveCompanyById(mappedDto.getCompanyId());
+			ResponseEntity<CompanyDto> companyDto = companyclient.retrieveCompanyById(correlationId,mappedDto.getCompanyId());
 			if (companyDto.getStatusCode().is2xxSuccessful()) {
 				CompanyDto company = companyDto.getBody();
 
@@ -69,10 +69,10 @@ public class DepartmentServImpl implements IDepartmentService {
 	}
 
 	@Override
-	public List<DepartmentDto> getAllDepartments() {
+	public List<DepartmentDto> getAllDepartments(String correlationId) {
 		var deptList = deptrepo.findAll();
 		List<DepartmentDto> deptDtoList = deptList.stream().map((dept) -> {
-			ResponseEntity<CompanyDto> companyDto = companyclient.retrieveCompanyById(dept.getCompanyId());
+			ResponseEntity<CompanyDto> companyDto = companyclient.retrieveCompanyById(correlationId,dept.getCompanyId());
 			CompanyDto body = companyDto.getBody();
 
 			DepartmentDto deptDto = new DepartmentDto();

@@ -2,6 +2,8 @@ package com.example.department.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,6 +45,8 @@ public class DepartmentController {
 	@Autowired
 	private DepartmentsContactInfoDto departmentContactInfoDto;
 	
+	private static final Logger logger =  LoggerFactory.getLogger(DepartmentController.class);
+	
 	@PostMapping("/")
 	public ResponseEntity<ResponseDto> createDepartment(@Valid @RequestBody DepartmentDto departmentDto){
 
@@ -50,15 +55,17 @@ public class DepartmentController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<DepartmentDto> getDepartmentById(@PathVariable Long id){
+	public ResponseEntity<DepartmentDto> getDepartmentById(@RequestHeader("trainingtracker-correlation-id")String correlationId,@PathVariable Long id){
 
-		DepartmentDto dept = deptserv.getDepartmentById(id);
+		DepartmentDto dept = deptserv.getDepartmentById(id,correlationId);
 		return ResponseEntity.status(HttpStatus.OK).body(dept);
 	}
 
 	@GetMapping("/")
-	public ResponseEntity<List<DepartmentDto>> getAllDepartments() {		
-		List<DepartmentDto> deptList = deptserv.getAllDepartments();
+	public ResponseEntity<List<DepartmentDto>> getAllDepartmentsApi(@RequestHeader("trainingtracker-correlation-id") String correlationId ) {		
+		List<DepartmentDto> deptList = deptserv.getAllDepartments(correlationId);
+	 	
+		logger.debug("training tracker -correlation-id found : {} ",correlationId);
 		return ResponseEntity.status(HttpStatus.OK).body(deptList);
 	}
 	

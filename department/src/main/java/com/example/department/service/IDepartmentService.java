@@ -3,14 +3,13 @@ package com.example.department.service;
 import java.util.List;
 
 import com.example.department.dto.DepartmentDto;
-import com.example.department.entity.Department;
 
 public interface IDepartmentService {
 
 	public void createDepartment(DepartmentDto deptDto);
 	
-	public DepartmentDto getDepartmentById(Long deptId);
+	public DepartmentDto getDepartmentById(Long deptId,String correlationId);
 	
-	public List<DepartmentDto> getAllDepartments();
+	public List<DepartmentDto> getAllDepartments(String correlationId);
 	
 }
