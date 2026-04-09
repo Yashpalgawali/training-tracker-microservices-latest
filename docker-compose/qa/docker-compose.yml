@@ -1,0 +1,181 @@
+services:
+  rabbit:
+    image: rabbitmq:4-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: rabbitmq-diagnostics check_port_connectivity
+      interval: 10s
+      timeout: 5s
+      retries: 20
+      start_period: 5s
+    extends:
+      file: common-config.yml
+      service: network-deploy-service
+
+  configserver:
+    image: "yashpalgawali/configserver:s1"
+    container_name: configserver-ms
+    ports:
+      - "8071:8071"
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+    extends:
+      file: common-config.yml
+      service: microservice-base-config
+  
+  eurekaserver:
+    image: "yashpalgawali/eurekaserver:s1"
+    container_name: eurekaserver-ms
+    ports:
+      - "8070:8070"
+    depends_on:
+      configserver:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:8070/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 45s
+    environment:
+      SPRING_APPLICATION_NAME: "eurekaserver"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+  companydb:
+    image: mysql
+    container_name: companydb
+    ports:
+      - 3306:3306
+    environment:
+       MYSQL_DATABASE: companydb
+    extends:
+      file: common-config.yml
+      service: microservice_db_config
+
+  departmentdb:
+    image: mysql
+    container_name: departmentdb
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: departmentdb
+    extends:
+      file: common-config.yml
+      service: microservice_db_config
+
+  company:
+    image: "yashpalgawali/company:s1"
+    container_name: company-ms
+    ports:
+      - "9091:9091"
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+      companydb:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "company"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://companydb:3306/companydb"
+    healthcheck:
+      test: "curl --fail --silent localhost:9091/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 25
+      start_period: 15s
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+  
+#  company1:
+#    image: "yashpalgawali/company:s1"
+#    container_name: company-ms1
+#    ports:
+#      - "9191:9091"
+#    depends_on:
+#      eurekaserver:
+#        condition: service_healthy
+#      companydb:
+#        condition: service_healthy
+#    healthcheck:
+#      test: "curl --fail --silent localhost:9091/actuator/health/readiness | grep UP || exit 1"
+#      interval: 10s
+#      timeout: 5s
+#      retries: 25
+#      start_period: 15s
+#
+#    environment:
+#      SPRING_APPLICATION_NAME: "company"
+#      SPRING_DATASOURCE_URL: "jdbc:mysql://companydb:3306/companydb"
+#    extends:
+#      file: common-config.yml
+#      service: microservice-eureka-config
+
+  department:
+    image: "yashpalgawali/department:s1"
+    container_name: department-ms
+    ports:
+      - "9092:9092"
+    depends_on:
+      eurekaserver:
+        condition: service_healthy
+      departmentdb:
+        condition: service_healthy
+    healthcheck:
+      test: "curl --fail --silent localhost:9092/actuator/health/readiness | grep UP || exit 1"
+      interval: 10s
+      timeout: 5s
+      retries: 25
+      start_period: 15s
+
+    environment:
+      SPRING_APPLICATION_NAME: "department"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://departmentdb:3306/departmentdb"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+#  designation:
+#    image: "yashpalgawali/designation:s1"
+#    container_name: designation-ms
+#    ports:
+#      - "9093:9093"
+#    depends_on:
+#      configserver:
+#        condition: service_healthy
+#    environment:
+#      SPRING_APPLICATION_NAME: "designation"
+#    extends:
+#      file: common-config.yml
+#      service: microservice-configserver-config
+  gatewayserver:
+    image: "yashpalgawali/gatewayserver:s1"
+    container_name: gatewayserver-ms
+    ports:
+      - "8072:8072"
+    depends_on:
+      company:
+        condition: service_healthy
+      department:
+        condition: service_healthy
+    environment:
+      SPRING_APPLICATION_NAME: "gatewayserver"
+    extends:
+      file: common-config.yml
+      service: microservice-eureka-config
+
+
+networks:
+  trainingtracker:
+    driver: "bridge"
