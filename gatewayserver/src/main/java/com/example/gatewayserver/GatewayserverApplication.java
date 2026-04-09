@@ -28,6 +28,7 @@ public class GatewayserverApplication {
 			.route(p-> p.path("/trainingtracker/department/**")
 					   .filters(f -> f.rewritePath("/trainingtracker/department/(?<segment>.*)", "/${segment}")
 							   .addResponseHeader("X-Response-Time", LocalDateTime.now().toString())
+							   .circuitBreaker(config->config.setName("companyCircuitBreaker").setFallbackUri("forward:/contactSupport"))
 							   )
                     .uri("lb://DEPARTMENT")
              ).build();

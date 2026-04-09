@@ -9,7 +9,9 @@ services:
       test: rabbitmq-diagnostics check_port_connectivity
       interval: 10s
       timeout: 5s
+
       retries: 20
+
       start_period: 5s
     extends:
       file: common-config.yml
@@ -27,12 +29,13 @@ services:
       test: "curl --fail --silent localhost:8071/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
+ 
       retries: 15
-      start_period: 30s
+      start_period: 30s 
     extends:
       file: common-config.yml
       service: microservice-base-config
-  
+
   eurekaserver:
     image: "yashpalgawali/eurekaserver:s1"
     container_name: eurekaserver-ms
@@ -47,6 +50,7 @@ services:
       timeout: 5s
       retries: 10
       start_period: 45s
+
     environment:
       SPRING_APPLICATION_NAME: "eurekaserver"
     extends:
@@ -96,8 +100,8 @@ services:
       start_period: 15s
     extends:
       file: common-config.yml
-      service: microservice-eureka-config
-  
+      service: microservice-eureka-config  
+
 #  company1:
 #    image: "yashpalgawali/company:s1"
 #    container_name: company-ms1
@@ -122,6 +126,7 @@ services:
 #      file: common-config.yml
 #      service: microservice-eureka-config
 
+
   department:
     image: "yashpalgawali/department:s1"
     container_name: department-ms
@@ -136,7 +141,9 @@ services:
       test: "curl --fail --silent localhost:9092/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
       timeout: 5s
+
       retries: 25
+
       start_period: 15s
 
     environment:

@@ -29,6 +29,7 @@ services:
       timeout: 5s
       retries: 15
       start_period: 30s
+
     extends:
       file: common-config.yml
       service: microservice-base-config
@@ -88,6 +89,7 @@ services:
     environment:
       SPRING_APPLICATION_NAME: "company"
       SPRING_DATASOURCE_URL: "jdbc:mysql://companydb:3306/companydb"
+
     healthcheck:
       test: "curl --fail --silent localhost:9091/actuator/health/readiness | grep UP || exit 1"
       interval: 10s
@@ -122,6 +124,7 @@ services:
 #      file: common-config.yml
 #      service: microservice-eureka-config
 
+
   department:
     image: "yashpalgawali/department:s1"
     container_name: department-ms
@@ -138,6 +141,7 @@ services:
       timeout: 5s
       retries: 25
       start_period: 15s
+
 
     environment:
       SPRING_APPLICATION_NAME: "department"
@@ -174,7 +178,6 @@ services:
     extends:
       file: common-config.yml
       service: microservice-eureka-config
-
 
 networks:
   trainingtracker:

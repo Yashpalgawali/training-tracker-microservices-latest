@@ -122,6 +122,7 @@ services:
 #      file: common-config.yml
 #      service: microservice-eureka-config
 
+
   department:
     image: "yashpalgawali/department:s1"
     container_name: department-ms
@@ -138,7 +139,6 @@ services:
       timeout: 5s
       retries: 25
       start_period: 15s
-
     environment:
       SPRING_APPLICATION_NAME: "department"
       SPRING_DATASOURCE_URL: "jdbc:mysql://departmentdb:3306/departmentdb"
@@ -159,6 +159,7 @@ services:
 #    extends:
 #      file: common-config.yml
 #      service: microservice-configserver-config
+
   gatewayserver:
     image: "yashpalgawali/gatewayserver:s1"
     container_name: gatewayserver-ms
@@ -174,7 +175,6 @@ services:
     extends:
       file: common-config.yml
       service: microservice-eureka-config
-
 
 networks:
   trainingtracker:
