@@ -316,7 +316,6 @@ INDEX VERSION 1.134+E:\Savera Microservices\Training Tracker Latest Microservice
 3131043289.index
 1342047299.index
 154229556.index
-3044601809.index
 1887394818.index
 892453739.index
 588986762.index

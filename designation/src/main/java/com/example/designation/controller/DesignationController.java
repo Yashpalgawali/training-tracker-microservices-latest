@@ -2,6 +2,8 @@ package com.example.designation.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
@@ -43,6 +45,8 @@ public class DesignationController {
 	@Autowired
 	private DesignationContactsInfoDto designationContactInfoDto;
 	
+	private final Logger logger = LoggerFactory.getLogger(DesignationController.class);
+	
 	@PostMapping("/")
 	public ResponseEntity<ResponseDto> createDesignation(@Valid @RequestBody DesignationDto desigDto) {
 		desigserv.createDesignation(desigDto);
@@ -79,6 +83,7 @@ public class DesignationController {
 	
 	@GetMapping("/contact-info")
 	public ResponseEntity<DesignationContactsInfoDto> getContactInfo(){
+		logger.debug("Invoked department controller contacts info {} ");
 		return ResponseEntity.status(HttpStatus.OK).body(designationContactInfoDto);
 	}
 }

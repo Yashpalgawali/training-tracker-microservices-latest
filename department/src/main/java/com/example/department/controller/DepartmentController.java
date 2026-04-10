@@ -81,6 +81,7 @@ public class DepartmentController {
 	
 	@GetMapping("/contact-info")
 	public ResponseEntity<DepartmentsContactInfoDto> getContactInfo(){
+		logger.debug("Departments contact info invoked");
 		return ResponseEntity.status(HttpStatus.OK).body(departmentContactInfoDto);
 	}
 }
