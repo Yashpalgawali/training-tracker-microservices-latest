@@ -18,7 +18,7 @@ public class GatewayserverApplication {
 	@Bean
 	RouteLocator trainingTrackerRouteConfig(RouteLocatorBuilder routeLocatorBuilder) {
 		
-		return routeLocatorBuilder.routes()
+		return routeLocatorBuilder.routes() 
 				.route(p-> p.path("/trainingtracker/company/**")
 						   .filters(f -> f.rewritePath("/trainingtracker/company/(?<segment>.*)", "/${segment}")
 								   		.addResponseHeader("X-Response-Time", LocalDateTime.now().toString())

@@ -9,14 +9,18 @@ spring:
 #    console:
 #      enabled: true
   datasource:
-#    url: jdbc:mysql://localhost:3399/departmentdb
-    url: jdbc:mysql://localhost:3306/departmentdb
+    url: jdbc:mysql://localhost:3399/departmentdb
+#    url: jdbc:mysql://localhost:3306/departmentdb
     username: root
     password: root
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
+  cloud:
+    openfeign:
+      circuitbreaker:
+        enabled: true
 
   sql:
     init:
@@ -76,3 +80,12 @@ logging:
       example:
         department: debug
 
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      sliding-window-size: 10
+      permitted-number-of-calls-in-half-open-state: 2
+      failure-rate-threshold: 50
+      wait-duration-in-open-state: 10000
+    
+      

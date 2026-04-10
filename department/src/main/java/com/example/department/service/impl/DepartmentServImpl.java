@@ -72,13 +72,20 @@ public class DepartmentServImpl implements IDepartmentService {
 	public List<DepartmentDto> getAllDepartments(String correlationId) {
 		var deptList = deptrepo.findAll();
 		List<DepartmentDto> deptDtoList = deptList.stream().map((dept) -> {
-			ResponseEntity<CompanyDto> companyDto = companyclient.retrieveCompanyById(correlationId,dept.getCompanyId());
-			CompanyDto body = companyDto.getBody();
-
 			DepartmentDto deptDto = new DepartmentDto();
+			
+			ResponseEntity<CompanyDto> companyDto = companyclient.retrieveCompanyById(correlationId,dept.getCompanyId());
+			CompanyDto body = null; 
+			
+			if(null != companyDto)
+			{
+				body = companyDto.getBody();
+				deptDto.setCompanyId(body.getCompanyId());
+				deptDto.setCompanyName(body.getCompanyName());
+			}			
+			
 			deptDto.setDepartmentId(dept.getDepartmentId());
-			deptDto.setDepartmentName(dept.getDepartmentName());
-			deptDto.setCompanyName(body.getCompanyName());
+			deptDto.setDepartmentName(dept.getDepartmentName());			
 
 			return deptDto;
 
