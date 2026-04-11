@@ -37,7 +37,7 @@ public class CompanyController {
 
 	private final ICompanyService compserv;
 	
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+	private final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 	
 	@Value("${build.version}")
 	private String buildVersion;
@@ -70,18 +70,20 @@ public class CompanyController {
 	}
 	
 	@GetMapping("/build-info")
-	public ResponseEntity<String> getBuildInfo(){
+	public ResponseEntity<String> getBuildInfo() {
 		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
 	}
 	
 	@GetMapping("/java-version")
-	public ResponseEntity<String> getJavaVersion(){
+	public ResponseEntity<String> getJavaVersion() {
 		return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("JAVA_HOME"));
 	}
 	
+	
 	@GetMapping("/contact-info")
 	public ResponseEntity<CompanyContactsInfoDto> getContactInfo(){
-		logger.debug("Invoked company contact info method");
+		System.err.println("Contact info invoked");
+		logger.error("Invoked company contact info method");
 		return ResponseEntity.status(HttpStatus.OK).body(companyContactInfoDto);
 	}
 }
