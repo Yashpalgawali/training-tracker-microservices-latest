@@ -26,6 +26,7 @@ import com.example.company.entity.Company;
 import com.example.company.mapper.CompanyMapper;
 import com.example.company.service.ICompanyService;
 
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -69,9 +70,18 @@ public class CompanyController {
 		return ResponseEntity.status(HttpStatus.OK).body(compList);
 	}
 	
+	@Retry(name="getBuildInfo", fallbackMethod = "getBuildInfoFallBack")
 	@GetMapping("/build-info")
 	public ResponseEntity<String> getBuildInfo() {
-		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+		logger.error("getBuildInfo() invoked");
+		throw new NullPointerException();
+//		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
+	}
+	
+	
+	public ResponseEntity<String> getBuildInfoFallBack(Throwable throwable ) {
+		logger.error("getBuildInfoFallBack() invoked");
+		return ResponseEntity.status(HttpStatus.OK).body("0.9");
 	}
 	
 	@GetMapping("/java-version")
