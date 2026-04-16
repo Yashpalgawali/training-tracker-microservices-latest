@@ -1,6 +1,7 @@
 package com.example.department.controller;
 
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ import com.example.department.dto.DepartmentsContactInfoDto;
 import com.example.department.dto.ResponseDto;
 import com.example.department.service.IDepartmentService;
 
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -69,14 +72,27 @@ public class DepartmentController {
 		return ResponseEntity.status(HttpStatus.OK).body(deptList);
 	}
 	
+	@Retry(name = "getBuildInfo", fallbackMethod = "getBuildInfoFallBack")
 	@GetMapping("/build-info")
-	public ResponseEntity<String> getBuildInfo(){
+	public ResponseEntity<String> getBuildInfo() throws TimeoutException{
+		logger.error("getBuildInfo invoked");
+//		throw new TimeoutException();
 		return ResponseEntity.status(HttpStatus.OK).body(buildVersion);
 	}
 	
+	public ResponseEntity<String> getBuildInfoFallBack(Throwable throwable){
+		logger.error("getBuildInfoFallBack invoked");
+		return ResponseEntity.status(HttpStatus.OK).body("0.7");
+	}
+	
 	@GetMapping("/java-version")
+	@RateLimiter(name = "getJavaVersion", fallbackMethod = "getJavaVersionFallBack")
 	public ResponseEntity<String> getJavaVersion(){
 		return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("JAVA_HOME"));
+	}
+	
+	public ResponseEntity<String> getJavaVersionFallBack(Throwable throwable) {
+		return ResponseEntity.status(HttpStatus.OK).body("JAVA 17");
 	}
 	
 	@GetMapping("/contact-info")

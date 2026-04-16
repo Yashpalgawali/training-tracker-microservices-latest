@@ -86,6 +86,7 @@ public class CompanyController {
 	
 	@GetMapping("/java-version")
 	public ResponseEntity<String> getJavaVersion() {
+		
 		return ResponseEntity.status(HttpStatus.OK).body(environment.getProperty("JAVA_HOME"));
 	}
 	

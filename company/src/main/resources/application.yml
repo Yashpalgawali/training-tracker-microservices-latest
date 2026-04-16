@@ -83,5 +83,8 @@ resilience4j.retry:
       wait-duration: 700
       enable-exponential-backoff: true
       exponential-backoff-multiplier: 2
+
+     
+      
     
       
