@@ -9,8 +9,8 @@ spring:
 #    console:
 #      enabled: true
   datasource:
-    url: jdbc:mysql://localhost:3399/companydb
-#    url: jdbc:mysql://localhost:3306/companydb
+#    url: jdbc:mysql://localhost:3399/companydb
+    url: jdbc:mysql://localhost:3306/companydb
     username: root
     password: root
   jpa:
@@ -84,7 +84,9 @@ resilience4j.retry:
       enable-exponential-backoff: true
       exponential-backoff-multiplier: 2
 
-     
-      
-    
-      
+resilience4j.ratelimiter:
+  configs:
+    default:
+      timeout-duration: 1000
+      limit-refresh-period: 5000
+      limit-for-period: 1
