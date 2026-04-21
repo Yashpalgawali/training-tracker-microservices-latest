@@ -38,6 +38,5 @@ services:
       retries: 25
       interval: 10s
       start_period: 5s
-
     environment:
       MYSQL_ROOT_PASSWORD: root

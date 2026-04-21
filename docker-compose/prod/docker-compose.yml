@@ -46,11 +46,7 @@ services:
     volumes:
       - ../observability/alloy/alloy-local-config.yml:/etc/alloy/config.alloy:ro
       - /var/run/docker.sock:/var/run/docker.sock
-    command: >
-      run
-        /etc/alloy/config.alloy
-        --server.http.listen-addr=0.0.0.0:12345
-        --storage.path=/var/lib/alloy/data
+    command:  run --server.http.listen-addr=0.0.0.0:12345 --storage.path=/var/lib/alloy/data /etc/alloy/config.alloy
     ports:
       - 12345:12345
     depends_on:
@@ -58,6 +54,7 @@ services:
     extends:
       file: common-config.yml
       service: network-deploy-service
+
 
   minio:
     image: minio/minio
@@ -165,7 +162,7 @@ services:
 
           server {
             listen             3100;
-
+ 
             location = / {
               return 200 'OK';
               auth_basic off;
@@ -288,6 +285,7 @@ services:
     extends:
       file: common-config.yml
       service: microservice_db_config
+
   redis: 
     image: redis
     ports: 
