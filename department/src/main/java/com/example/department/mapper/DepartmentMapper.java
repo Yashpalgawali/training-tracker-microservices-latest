@@ -6,6 +6,7 @@ import com.example.department.entity.Department;
 public class DepartmentMapper {
 
 	public static DepartmentDto mapToDepartmentDto(Department department,DepartmentDto deptDto) {
+		deptDto.setDepartmentId(department.getDepartmentId());
 		deptDto.setDepartmentName(department.getDepartmentName());
 		deptDto.setCompanyId(department.getCompanyId());
 		
@@ -13,6 +14,7 @@ public class DepartmentMapper {
 	}
 	
 	public static Department mapToDepartment(DepartmentDto deptDto, Department department) {
+		department.setCompanyId(deptDto.getDepartmentId());
 		department.setDepartmentName(deptDto.getDepartmentName());
 		department.setCompanyId(deptDto.getCompanyId());
 		

@@ -9,8 +9,8 @@ spring:
 #    console:
 #      enabled: true
   datasource:
-#    url: jdbc:mysql://localhost:3399/companydb
-    url: jdbc:mysql://localhost:3306/companydb
+    url: jdbc:mysql://localhost:3399/companydb
+#    url: jdbc:mysql://localhost:3306/companydb
     username: root
     password: root
   jpa:
@@ -53,6 +53,9 @@ management:
   info:
     env:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 eureka:
   instance:
