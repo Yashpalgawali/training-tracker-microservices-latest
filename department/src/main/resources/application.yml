@@ -1,16 +1,10 @@
 spring:
   application:
     name: department
-#  datasource:
-#    url: jdbc:h2:mem:testdb
-#    username: sa
-#    password:
-#  h2:
-#    console:
-#      enabled: true
+
   datasource:
-#    url: jdbc:mysql://localhost:3399/departmentdb
-    url: jdbc:mysql://localhost:3306/departmentdb
+    url: jdbc:mysql://localhost:3399/departmentdb
+#    url: jdbc:mysql://localhost:3306/departmentdb
     username: root
     password: root
   jpa:
